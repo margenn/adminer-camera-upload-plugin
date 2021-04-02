@@ -33,10 +33,12 @@ webserver
 │   │   webcam.min.js
 │
 └───uploads
-    │   my_photo_210402_134704.jpg
-    │   my_photo_210402_144601.jpg
-    │   my_photo_210402_154832.jpg
-    │   ...
+    │
+    └───teste
+        │   my_photo_210402_134704.jpg
+        │   my_photo_210402_144601.jpg
+        │   my_photo_210402_154832.jpg
+        │   ...
 ```
 
 
