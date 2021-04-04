@@ -34,7 +34,7 @@ webserver
 │
 └───uploads
     │
-    └───teste
+    └───test
         │   my_photo_210402_134704.jpg
         │   my_photo_210402_144601.jpg
         │   my_photo_210402_154832.jpg
