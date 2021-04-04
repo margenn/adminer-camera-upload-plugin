@@ -53,7 +53,7 @@ function adminer_object() {
 	foreach (glob("$pluginsfolder/plugins/*.php") as $filename) { include_once "$filename"; }
 	$plugins = array(
 		// specify enabled plugins here.
-		new AdminerCameraUpload('./uploads/', null, array("$pluginsfolder/plugins/webcam.min.js")),
+		new AdminerCameraUpload('./uploads/', null, array("$pluginsfolder/plugins/webcam.min.js"), '_(ph|f)oto'),
 	);
 	return new AdminerPlugin($plugins);
 }
