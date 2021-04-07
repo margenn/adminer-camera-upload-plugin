@@ -3,11 +3,11 @@
 A plugin that allows you to take pictures and upload the images from adminer.
 It was base on file-upload plugin.
 
-Works with all fields ending with "_photo"
+Works with all fields ending with "_photo" or any other regex.
 
 It depends on webcam.min.js. You can find here: https://github.com/jhuckaby/webcamjs
 
-Your site **must** be **https** to get this plugin working.
+Your site **must** be **httpS** to get this plugin working.
 
 
 Example of a table for testing purposes: 
@@ -20,7 +20,7 @@ Example of a table for testing purposes:
 ```
 
 
-The path you your server will look like this:
+The path of your server will look like this:
 ```
 webserver
 │   index.php
@@ -42,7 +42,8 @@ webserver
 ```
 
 
-The index.php can look like this:
+Example of index.php: 
+
 ``` php
 <?php
 function adminer_object() {
@@ -61,6 +62,4 @@ function adminer_object() {
 $arqAdminer = (basename(__FILE__) == 'index.php') ? 'adminer-4.7.9-mysql-pt-br.php' : 'index.php';
 include "./$arqAdminer";
 ```
-
-
-
+Note: On the code above, $pluginsfolder and $arqAdminer depends on the name of the file being executed. So, you can have the same file in production (index.php) and development (plugin.php).
