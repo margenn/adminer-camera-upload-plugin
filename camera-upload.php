@@ -6,7 +6,7 @@
 * @author Marcelo Gennari, https://gren.com.br/
 * @license https://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
 * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 (one or other)
-* @version 1.0.1 beta
+* @version 1.0.3
 */
 class AdminerCameraUpload {
 	/** @access protected */
@@ -18,15 +18,15 @@ class AdminerCameraUpload {
 	* @param string required js libraries
 	* @param string fields terminated with this regex, will activate this plugin
 	*/
-	function __construct($uploadPath = "./photos/", $displayPath = null
-			, $scripts = array("webcam.min.js"), $fieldsufix = '_photo') {
+	function __construct($uploadPath = "./photos/", $displayPath = null, $scripts = array("webcam.min.js"), $fieldsufix = '_photo') {
 		$this->uploadPath = $uploadPath;
 		$this->displayPath = ($displayPath !== null ? $displayPath : $uploadPath);
 		$this->scripts = $scripts;
-		$this->fieldsufix = '~(.*)' . $fieldsufix . '$~';
+		$this->fieldsufix = '~' . $fieldsufix . '$~';
 	}
 
 	function head() {
+		if(!isset($_GET["edit"])) return;
 		foreach ($this->scripts as $script) {
 			echo script_src($script);
 		}
@@ -87,7 +87,8 @@ class AdminerCameraUpload {
 		// no return means NULL, which trigger this method in other plugins until reach the original overloaded method
 	}
 
-	// receives the mime64-serialized image, decode, check/create folder, store and returns the filename. False otherwise
+	// receives the mime64-serialized image, decode, check/create folder,
+	// store and returns the filename. False otherwise
 	function processInput($field, $value, $function = "") {
 		if (preg_match($this->fieldsufix, $field["field"], $regs)) {
 			if ($_GET["edit"] != "") {
