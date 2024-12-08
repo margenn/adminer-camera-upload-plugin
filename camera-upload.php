@@ -7,11 +7,11 @@
  * @author Marcelo Gennari, https://gren.com.br/
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 (one or other)
- * @version 1.1.0
+ * @version 1.2.3
  */
 class AdminerCameraUpload {
 	/** @access protected */
-	var $uploadPath, $displayPath, $scripts;
+	var $uploadPath, $displayPath, $scripts, $fieldsufix;
 
 	/**
 	* @param string folder where uploaded photos will be stored
@@ -20,7 +20,7 @@ class AdminerCameraUpload {
 	* @param string fields terminated with this regex, will activate this plugin
 	*/
 	function __construct($uploadPath = "./photos", $displayPath = null
-			, $scripts = array("webcam.min.js"), $fieldsufix = '_photo') {
+			, $scripts = array("./plugins/static/webcam.min.js"), $fieldsufix = '_photo') {
 		$this->uploadPath = rtrim($uploadPath, '/');
 		$this->displayPath =  $displayPath ? rtrim($displayPath, '/') : $this->uploadPath;
 		$this->scripts = $scripts;
@@ -28,6 +28,22 @@ class AdminerCameraUpload {
 	}
 
 	function head() {
+		// INICIAL CHECK
+		// interface must be 'edit'
+		if (! isset($_GET['edit']) ) { return; }
+		// $fields can't be null
+		$fields = fields($_GET["edit"]); if (! $fields ) { return; }
+		// at least one photo field
+		$hasPhotoField = false;
+		foreach ($fields as $field) {
+			if ( preg_match($this->fieldsufix, $field["field"]) ) {
+				$hasPhotoField = true;
+			}
+		}
+		if (! $hasPhotoField ) { return; }
+		// ALL ABOVE IS OK, PROCEED
+
+		// load js
 		foreach ($this->scripts as $script) {
 			echo script_src($script);
 		}
@@ -39,7 +55,9 @@ class AdminerCameraUpload {
 			$fieldname = "$field[field]";
 			$return = "";
 			if (!empty($value)) { // link to the attached file
-				$return .= "<a href='$this->displayPath/$_GET[db]/$table/$fieldname/$value'> <div id='attachedfile'>$value</div> </a>";
+				// $return .= "<a target='_blank' href='$this->displayPath/$_GET[db]/$table/$fieldname/$value'> <div id='attachedfile'>$value</div> </a>";
+				$imageUrl = "$this->displayPath/$_GET[db]/$table/$fieldname/$value";
+				$return .= "<a target='_blank' href='$imageUrl'> <img id='attachedimg' src='$imageUrl' alt='$value' /> </a>";
 			}
 			$return .= "<input type='hidden' id='$fieldname' name='$fieldname'>\n";
 			$return .= "<div id='preview_$fieldname'></div>\n";
