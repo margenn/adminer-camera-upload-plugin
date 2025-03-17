@@ -7,7 +7,7 @@
  * @author Marcelo Gennari, https://gren.com.br/
  * @license https://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  * @license https://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2 (one or other)
- * @version 1.2.3
+ * @version 2.0.0
  */
 class AdminerCameraUpload {
 	/** @access protected */
