@@ -32,7 +32,7 @@ class AdminerCameraUpload {
 		// interface must be 'edit'
 		if (! isset($_GET['edit']) ) { return; }
 		// $fields can't be null
-		$fields = fields($_GET["edit"]); if (! $fields ) { return; }
+		$fields = Adminer\fields($_GET["edit"]); if (! $fields ) { return; }
 		// at least one photo field
 		$hasPhotoField = false;
 		foreach ($fields as $field) {
@@ -45,7 +45,7 @@ class AdminerCameraUpload {
 
 		// load js
 		foreach ($this->scripts as $script) {
-			echo script_src($script);
+			echo Adminer\script_src($script);
 		}
 	}
 
@@ -61,7 +61,7 @@ class AdminerCameraUpload {
 			}
 			$return .= "<input type='hidden' id='$fieldname' name='$fieldname'>\n";
 			$return .= "<div id='preview_$fieldname'></div>\n";
-			$return .= script("
+			$return .= Adminer\script("
 			function start_$fieldname() {
 				if (! Webcam.loaded) {
 					var preview_w=200, preview_h=150, resolution_multiplier=3.2;
@@ -101,10 +101,10 @@ class AdminerCameraUpload {
 				}
 			}
 			");
-			$return .= "<input type=button id='start_$fieldname' value='Start'>" . script("qs('#start_$fieldname').onclick = start_$fieldname;");
-			$return .= "<input type=button id='snap_$fieldname' value='Snap' style='visibility:hidden;'>" . script("qs('#snap_$fieldname').onclick = snap_$fieldname;");
-			$return .= "<input type=button id='redo_$fieldname' value='Redo' style='visibility:hidden;'>" . script("qs('#redo_$fieldname').onclick = redo_$fieldname;");
-			$return .= "<input type=button id='ok_$fieldname' value='OK' style='visibility:hidden;'>" . script("qs('#ok_$fieldname').onclick = ok_$fieldname;");
+			$return .= "<input type=button id='start_$fieldname' value='Start'>" . Adminer\script("qs('#start_$fieldname').onclick = start_$fieldname;");
+			$return .= "<input type=button id='snap_$fieldname' value='Snap' style='visibility:hidden;'>" . Adminer\script("qs('#snap_$fieldname').onclick = snap_$fieldname;");
+			$return .= "<input type=button id='redo_$fieldname' value='Redo' style='visibility:hidden;'>" . Adminer\script("qs('#redo_$fieldname').onclick = redo_$fieldname;");
+			$return .= "<input type=button id='ok_$fieldname' value='OK' style='visibility:hidden;'>" . Adminer\script("qs('#ok_$fieldname').onclick = ok_$fieldname;");
 			return $return;
 		}
 		// no return means return NULL, which trigger this method in other plugins until reach the original overloaded method
@@ -138,7 +138,7 @@ class AdminerCameraUpload {
 			} else {
 				$filename = $value;
 			}
-			return q($filename);
+			return Adminer\q($filename);
 		}
 	}
 
